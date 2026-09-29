@@ -11,15 +11,18 @@ print("Welcome to Employee Management System....")
 
 class Person:
 
+    # Constructor
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
+    # Display method
     def display(self):
         print("\nPerson Details:")
         print("Name:", self.name)
         print("Age:", self.age)
 
+    # Destructor
     def __del__(self):
         pass
 
@@ -43,29 +46,31 @@ class Employee:
         self.set_employee_id(employee_id)
         self.set_salary(salary)
 
-    # Getter for employee_id
+    # Getter for Employee ID
     def get_employee_id(self):
         return self.__employee_id
 
-    # Setter for employee_id
+    # Setter for Employee ID
     def set_employee_id(self, employee_id):
 
         if employee_id == "":
-            raise ValueError("Employee ID cannot be empty.")
+            print("Employee ID cannot be empty.")
+            return
 
         self.__employee_id = employee_id
 
-    # Getter for salary
+    # Getter for Salary
     def get_salary(self):
         return self.__salary
 
-    # Setter for salary
+    # Setter for Salary
     def set_salary(self, salary):
 
         salary = float(salary)
 
         if salary < 0:
-            raise ValueError("Salary cannot be negative.")
+            print("Salary cannot be negative.")
+            return
 
         self.__salary = salary
 
@@ -91,11 +96,12 @@ class Employee:
 
     # Destructor
     def __del__(self):
+
         try:
             print(
                 f"Resource cleanup completed for {self.name}."
             )
-        except AttributeError:
+        except:
             pass
 
 
@@ -105,6 +111,7 @@ class Employee:
 
 class Manager(Employee):
 
+    # Constructor
     def __init__(
         self,
         employee_id,
@@ -137,6 +144,7 @@ class Manager(Employee):
 
 class Developer(Employee):
 
+    # Constructor
     def __init__(
         self,
         employee_id,
@@ -172,33 +180,17 @@ class Developer(Employee):
 
 def create_person():
 
-    while True:
+    name = input("\nEnter Name: ")
+    age = int(input("Enter Age: "))
 
-        try:
+    person = Person(name, age)
 
-            name = input("\nEnter Name: ").strip()
+    print(
+        f"\nPerson created with name: "
+        f"{name} and age: {age}."
+    )
 
-            if name == "":
-                print("Name cannot be empty.")
-                continue
-
-            age = int(input("Enter Age: "))
-
-            if age < 0:
-                print("Age cannot be negative.")
-                continue
-
-            person = Person(name, age)
-
-            print(
-                f"\nPerson created with name: "
-                f"{name} and age: {age}."
-            )
-
-            return person
-
-        except ValueError:
-            print("Please enter a valid age.")
+    return person
 
 
 # ------------------------------------------------------------
@@ -207,52 +199,27 @@ def create_person():
 
 def create_employee():
 
-    while True:
+    name = input("\nEnter Name: ")
+    age = int(input("Enter Age: "))
+    employee_id = input("Enter Employee ID: ")
+    salary = float(input("Enter Salary: "))
 
-        try:
+    employee = Employee(
+        name,
+        age,
+        employee_id,
+        salary
+    )
 
-            name = input("\nEnter Name: ").strip()
+    print(
+        f"\nEmployee created with name: "
+        f"{name}, age: {age}, "
+        f"ID: {employee.get_employee_id()}, "
+        f"and salary: "
+        f"${employee.get_salary():.2f}."
+    )
 
-            if name == "":
-                print("Name cannot be empty.")
-                continue
-
-            age = int(input("Enter Age: "))
-
-            if age < 0:
-                print("Age cannot be negative.")
-                continue
-
-            employee_id = input(
-                "Enter Employee ID: "
-            ).strip()
-
-            salary = float(
-                input("Enter Salary: ")
-            )
-
-            employee = Employee(
-                name,
-                age,
-                employee_id,
-                salary
-            )
-
-            print(
-                f"\nEmployee created with name: "
-                f"{name}, age: {age}, "
-                f"ID: {employee.get_employee_id()}, "
-                f"and salary: "
-                f"${employee.get_salary():.2f}."
-            )
-
-            return employee
-
-        except ValueError as error:
-
-            print(
-                f"Invalid input: {error}"
-            )
+    return employee
 
 
 # ------------------------------------------------------------
@@ -261,61 +228,29 @@ def create_employee():
 
 def create_manager():
 
-    while True:
+    name = input("\nEnter Name: ")
+    age = int(input("Enter Age: "))
+    employee_id = input("Enter Employee ID: ")
+    salary = float(input("Enter Salary: "))
+    department = input("Enter Department: ")
 
-        try:
+    manager = Manager(
+        employee_id,
+        name,
+        age,
+        salary,
+        department
+    )
 
-            name = input("\nEnter Name: ").strip()
+    print(
+        f"\nManager created with name: "
+        f"{name}, age: {age}, "
+        f"ID: {employee_id}, "
+        f"salary: ${salary:.2f}, "
+        f"and department: {department}."
+    )
 
-            if name == "":
-                print("Name cannot be empty.")
-                continue
-
-            age = int(input("Enter Age: "))
-
-            if age < 0:
-                print("Age cannot be negative.")
-                continue
-
-            employee_id = input(
-                "Enter Employee ID: "
-            ).strip()
-
-            salary = float(
-                input("Enter Salary: ")
-            )
-
-            department = input(
-                "Enter Department: "
-            ).strip()
-
-            if department == "":
-                print("Department cannot be empty.")
-                continue
-
-            manager = Manager(
-                employee_id,
-                name,
-                age,
-                salary,
-                department
-            )
-
-            print(
-                f"\nManager created with name: "
-                f"{name}, age: {age}, "
-                f"ID: {employee_id}, "
-                f"salary: ${salary:.2f}, "
-                f"and department: {department}."
-            )
-
-            return manager
-
-        except ValueError as error:
-
-            print(
-                f"Invalid input: {error}"
-            )
+    return manager
 
 
 # ------------------------------------------------------------
@@ -324,64 +259,32 @@ def create_manager():
 
 def create_developer():
 
-    while True:
+    name = input("\nEnter Name: ")
+    age = int(input("Enter Age: "))
+    employee_id = input("Enter Employee ID: ")
+    salary = float(input("Enter Salary: "))
+    programming_language = input(
+        "Enter Programming Language: "
+    )
 
-        try:
+    developer = Developer(
+        employee_id,
+        name,
+        age,
+        salary,
+        programming_language
+    )
 
-            name = input("\nEnter Name: ").strip()
+    print(
+        f"\nDeveloper created with name: "
+        f"{name}, age: {age}, "
+        f"ID: {employee_id}, "
+        f"salary: ${salary:.2f}, "
+        f"and programming language: "
+        f"{programming_language}."
+    )
 
-            if name == "":
-                print("Name cannot be empty.")
-                continue
-
-            age = int(input("Enter Age: "))
-
-            if age < 0:
-                print("Age cannot be negative.")
-                continue
-
-            employee_id = input(
-                "Enter Employee ID: "
-            ).strip()
-
-            salary = float(
-                input("Enter Salary: ")
-            )
-
-            programming_language = input(
-                "Enter Programming Language: "
-            ).strip()
-
-            if programming_language == "":
-                print(
-                    "Programming language cannot be empty."
-                )
-                continue
-
-            developer = Developer(
-                employee_id,
-                name,
-                age,
-                salary,
-                programming_language
-            )
-
-            print(
-                f"\nDeveloper created with name: "
-                f"{name}, age: {age}, "
-                f"ID: {employee_id}, "
-                f"salary: ${salary:.2f}, "
-                f"and programming language: "
-                f"{programming_language}."
-            )
-
-            return developer
-
-        except ValueError as error:
-
-            print(
-                f"Invalid input: {error}"
-            )
+    return developer
 
 
 # ------------------------------------------------------------
@@ -389,11 +292,6 @@ def create_developer():
 # ------------------------------------------------------------
 
 def show_details(persons, employees):
-
-    if not persons and not employees:
-
-        print("\nNo records available.")
-        return
 
     print("\nChoose details to show:")
     print("1. Person")
@@ -407,7 +305,7 @@ def show_details(persons, employees):
     # Person
     if choice == "1":
 
-        if persons:
+        if len(persons) > 0:
 
             for person in persons:
                 person.display()
@@ -523,14 +421,26 @@ def main():
     persons = []
     employees = []
 
+    # Object references
+    person = None
+    employee = None
+    manager = None
+    developer = None
+
     print("\n==============================================")
     print("       PYTHON OOP PROJECT: EMPLOYEE")
     print("           MANAGEMENT SYSTEM")
     print("==============================================")
 
+    show_another = False
+
     while True:
 
-        print("\n--- Choose an operation ---")
+        if show_another:
+            print("\n--- Choose another operation ---")
+            show_another = False
+        else:
+            print("\n--- Choose an operation ---")
 
         print("\nChoose an operation:")
         print("1. Create a Person")
@@ -542,31 +452,46 @@ def main():
 
         choice = input("\nEnter your choice: ").strip()
 
-        # Create Person
+        # ----------------------------------------------------
+        # CREATE PERSON
+        # ----------------------------------------------------
+
         if choice == "1":
 
             person = create_person()
             persons.append(person)
 
-        # Create Employee
+        # ----------------------------------------------------
+        # CREATE EMPLOYEE
+        # ----------------------------------------------------
+
         elif choice == "2":
 
             employee = create_employee()
             employees.append(employee)
 
-        # Create Manager
+        # ----------------------------------------------------
+        # CREATE MANAGER
+        # ----------------------------------------------------
+
         elif choice == "3":
 
             manager = create_manager()
             employees.append(manager)
 
-        # Create Developer
+        # ----------------------------------------------------
+        # CREATE DEVELOPER
+        # ----------------------------------------------------
+
         elif choice == "4":
 
             developer = create_developer()
             employees.append(developer)
 
-        # Show Details
+        # ----------------------------------------------------
+        # SHOW DETAILS
+        # ----------------------------------------------------
+
         elif choice == "5":
 
             show_details(
@@ -574,9 +499,12 @@ def main():
                 employees
             )
 
-            print("\n--- Choose another operation ---")
+            show_another = True
 
-        # Exit
+        # ----------------------------------------------------
+        # EXIT
+        # ----------------------------------------------------
+
         elif choice == "6":
 
             print(
@@ -586,11 +514,21 @@ def main():
 
             print("Goodbye!")
 
-            # Destructor will clean the objects
-            persons.clear()
+            # Delete references
+            developer = None
+            manager = None
+            employee = None
+            person = None
+
+            # Clear remaining objects
             employees.clear()
+            persons.clear()
 
             break
+
+        # ----------------------------------------------------
+        # INVALID CHOICE
+        # ----------------------------------------------------
 
         else:
 
