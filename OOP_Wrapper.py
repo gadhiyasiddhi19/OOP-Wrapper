@@ -1,8 +1,6 @@
 # ============================================================
-# Employee Management System
+# Python OOP Project - Employee Management System
 # ============================================================
-
-print("Welcome to Employee Management System....")
 
 
 # ------------------------------------------------------------
@@ -18,9 +16,8 @@ class Person:
 
     # Display method
     def display(self):
-        print("\nPerson Details:")
-        print("Name:", self.name)
-        print("Age:", self.age)
+        print(f"Name: {self.name}")
+        print(f"Age: {self.age}")
 
     # Destructor
     def __del__(self):
@@ -34,23 +31,29 @@ class Person:
 class Employee:
 
     # Constructor
-    def __init__(self, name, age, employee_id, salary):
+    def __init__(self, name, age, employee_id="", salary=0):
 
         self.name = name
         self.age = age
 
-        # Private attributes
-        self.__employee_id = ""
-        self.__salary = 0.0
+        # Encapsulation - Private Attributes
+        self.__employee_id = employee_id
+        self.__salary = 0
 
-        self.set_employee_id(employee_id)
+        # Using Setter for Salary Validation
         self.set_salary(salary)
 
+    # --------------------------------------------------------
     # Getter for Employee ID
+    # --------------------------------------------------------
+
     def get_employee_id(self):
         return self.__employee_id
 
+    # --------------------------------------------------------
     # Setter for Employee ID
+    # --------------------------------------------------------
+
     def set_employee_id(self, employee_id):
 
         if employee_id == "":
@@ -59,22 +62,29 @@ class Employee:
 
         self.__employee_id = employee_id
 
+    # --------------------------------------------------------
     # Getter for Salary
+    # --------------------------------------------------------
+
     def get_salary(self):
         return self.__salary
 
+    # --------------------------------------------------------
     # Setter for Salary
-    def set_salary(self, salary):
+    # --------------------------------------------------------
 
-        salary = float(salary)
+    def set_salary(self, salary):
 
         if salary < 0:
             print("Salary cannot be negative.")
             return
 
-        self.__salary = salary
+        self.__salary = float(salary)
 
+    # --------------------------------------------------------
     # Alternative Constructor
+    # --------------------------------------------------------
+
     @classmethod
     def from_dict(cls, data):
 
@@ -85,24 +95,26 @@ class Employee:
             data.get("salary", 0)
         )
 
-    # Display method
+    # --------------------------------------------------------
+    # Display Employee Details
+    # --------------------------------------------------------
+
     def display(self):
 
-        print("\nEmployee Details:")
-        print("Name:", self.name)
-        print("Age:", self.age)
-        print("Employee ID:", self.__employee_id)
-        print(f"Salary: ${self.__salary:.2f}")
+        print(f"Name: {self.name}")
+        print(f"Age: {self.age}")
+        print(f"Employee ID: {self.get_employee_id()}")
+        print(f"Salary: ${self.get_salary():.2f}")
 
+    # --------------------------------------------------------
     # Destructor
+    # --------------------------------------------------------
+
     def __del__(self):
 
-        try:
-            print(
-                f"Resource cleanup completed for {self.name}."
-            )
-        except:
-            pass
+        print(
+            f"Resource cleanup completed for {self.name}."
+        )
 
 
 # ------------------------------------------------------------
@@ -114,14 +126,14 @@ class Manager(Employee):
     # Constructor
     def __init__(
         self,
-        employee_id,
         name,
         age,
+        employee_id,
         salary,
         department
     ):
 
-        # Calling parent constructor
+        # Calling Parent Class Constructor
         super().__init__(
             name,
             age,
@@ -131,11 +143,14 @@ class Manager(Employee):
 
         self.department = department
 
+    # --------------------------------------------------------
     # Method Overriding
+    # --------------------------------------------------------
+
     def display(self):
 
         super().display()
-        print("Department:", self.department)
+        print(f"Department: {self.department}")
 
 
 # ------------------------------------------------------------
@@ -147,14 +162,14 @@ class Developer(Employee):
     # Constructor
     def __init__(
         self,
-        employee_id,
         name,
         age,
+        employee_id,
         salary,
         programming_language
     ):
 
-        # Calling parent constructor
+        # Calling Parent Class Constructor
         super().__init__(
             name,
             age,
@@ -164,13 +179,16 @@ class Developer(Employee):
 
         self.programming_language = programming_language
 
+    # --------------------------------------------------------
     # Method Overriding
+    # --------------------------------------------------------
+
     def display(self):
 
         super().display()
         print(
-            "Programming Language:",
-            self.programming_language
+            f"Programming Language: "
+            f"{self.programming_language}"
         )
 
 
@@ -180,14 +198,14 @@ class Developer(Employee):
 
 def create_person():
 
-    name = input("\nEnter Name: ")
+    name = input("Enter Name: ")
     age = int(input("Enter Age: "))
 
     person = Person(name, age)
 
     print(
-        f"\nPerson created with name: "
-        f"{name} and age: {age}."
+        f"\nPerson created with name: {name} "
+        f"and age: {age}."
     )
 
     return person
@@ -199,7 +217,7 @@ def create_person():
 
 def create_employee():
 
-    name = input("\nEnter Name: ")
+    name = input("Enter Name: ")
     age = int(input("Enter Age: "))
     employee_id = input("Enter Employee ID: ")
     salary = float(input("Enter Salary: "))
@@ -212,11 +230,9 @@ def create_employee():
     )
 
     print(
-        f"\nEmployee created with name: "
-        f"{name}, age: {age}, "
-        f"ID: {employee.get_employee_id()}, "
-        f"and salary: "
-        f"${employee.get_salary():.2f}."
+        f"\nEmployee created with name: {name}, "
+        f"age: {age}, ID: {employee.get_employee_id()}, "
+        f"and salary: ${employee.get_salary():.2f}."
     )
 
     return employee
@@ -228,24 +244,23 @@ def create_employee():
 
 def create_manager():
 
-    name = input("\nEnter Name: ")
+    name = input("Enter Name: ")
     age = int(input("Enter Age: "))
     employee_id = input("Enter Employee ID: ")
     salary = float(input("Enter Salary: "))
     department = input("Enter Department: ")
 
     manager = Manager(
-        employee_id,
         name,
         age,
+        employee_id,
         salary,
         department
     )
 
     print(
-        f"\nManager created with name: "
-        f"{name}, age: {age}, "
-        f"ID: {employee_id}, "
+        f"\nManager created with name: {name}, "
+        f"age: {age}, ID: {employee_id}, "
         f"salary: ${salary:.2f}, "
         f"and department: {department}."
     )
@@ -259,7 +274,7 @@ def create_manager():
 
 def create_developer():
 
-    name = input("\nEnter Name: ")
+    name = input("Enter Name: ")
     age = int(input("Enter Age: "))
     employee_id = input("Enter Employee ID: ")
     salary = float(input("Enter Salary: "))
@@ -268,17 +283,16 @@ def create_developer():
     )
 
     developer = Developer(
-        employee_id,
         name,
         age,
+        employee_id,
         salary,
         programming_language
     )
 
     print(
-        f"\nDeveloper created with name: "
-        f"{name}, age: {age}, "
-        f"ID: {employee_id}, "
+        f"\nDeveloper created with name: {name}, "
+        f"age: {age}, ID: {employee_id}, "
         f"salary: ${salary:.2f}, "
         f"and programming language: "
         f"{programming_language}."
@@ -300,21 +314,29 @@ def show_details(persons, employees):
     print("4. Developer")
     print("5. All")
 
-    choice = input("Enter your choice: ").strip()
+    choice = input("Enter your choice: ")
 
-    # Person
+    # --------------------------------------------------------
+    # PERSON DETAILS
+    # --------------------------------------------------------
+
     if choice == "1":
 
-        if len(persons) > 0:
+        if len(persons) == 0:
+
+            print("\nNo Person records available.")
+
+        else:
+
+            print("\nPerson Details:")
 
             for person in persons:
                 person.display()
 
-        else:
+    # --------------------------------------------------------
+    # EMPLOYEE DETAILS
+    # --------------------------------------------------------
 
-            print("\nNo Person records available.")
-
-    # Employee
     elif choice == "2":
 
         found = False
@@ -327,13 +349,17 @@ def show_details(persons, employees):
                 and not isinstance(employee, Developer)
             ):
 
+                print("\nEmployee Details:")
                 employee.display()
                 found = True
 
         if not found:
             print("\nNo Employee records available.")
 
-    # Manager
+    # --------------------------------------------------------
+    # MANAGER DETAILS
+    # --------------------------------------------------------
+
     elif choice == "3":
 
         found = False
@@ -342,13 +368,17 @@ def show_details(persons, employees):
 
             if isinstance(employee, Manager):
 
+                print("\nManager Details:")
                 employee.display()
                 found = True
 
         if not found:
             print("\nNo Manager records available.")
 
-    # Developer
+    # --------------------------------------------------------
+    # DEVELOPER DETAILS
+    # --------------------------------------------------------
+
     elif choice == "4":
 
         found = False
@@ -357,26 +387,42 @@ def show_details(persons, employees):
 
             if isinstance(employee, Developer):
 
+                print("\nEmployee Details:")
                 employee.display()
                 found = True
 
         if not found:
             print("\nNo Developer records available.")
 
-    # All
+    # --------------------------------------------------------
+    # ALL DETAILS
+    # --------------------------------------------------------
+
     elif choice == "5":
 
         print("\n========== ALL DETAILS ==========")
 
         for person in persons:
+            print("\nPerson Details:")
             person.display()
 
         for employee in employees:
+            print()
+
+            if isinstance(employee, Manager):
+                print("Manager Details:")
+
+            elif isinstance(employee, Developer):
+                print("Employee Details:")
+
+            else:
+                print("Employee Details:")
+
             employee.display()
 
     else:
 
-        print("Invalid choice.")
+        print("\nInvalid choice.")
         return
 
     # --------------------------------------------------------
@@ -437,9 +483,12 @@ def main():
     while True:
 
         if show_another:
+
             print("\n--- Choose another operation ---")
             show_another = False
+
         else:
+
             print("\n--- Choose an operation ---")
 
         print("\nChoose an operation:")
@@ -450,7 +499,7 @@ def main():
         print("5. Show Details")
         print("6. Exit")
 
-        choice = input("\nEnter your choice: ").strip()
+        choice = input("\nEnter your choice: ")
 
         # ----------------------------------------------------
         # CREATE PERSON
@@ -514,7 +563,7 @@ def main():
 
             print("Goodbye!")
 
-            # Delete references
+            # Delete object references
             developer = None
             manager = None
             employee = None
@@ -539,7 +588,7 @@ def main():
 
 
 # ------------------------------------------------------------
-# START PROGRAM
+# PROGRAM START
 # ------------------------------------------------------------
 
 if __name__ == "__main__":

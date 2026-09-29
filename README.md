@@ -10,24 +10,26 @@ This is a simple Python menu-driven Employee Management System developed to demo
 
 The program allows users to:
 
-- Create a Person.
-- Create an Employee.
-- Create a Manager.
-- Create a Developer.
-- Display details of created objects.
-- Check inheritance relationships.
-- Use encapsulation and validation.
-- Demonstrate method overriding and `super()`.
-- Demonstrate `issubclass()` and `isinstance()`.
-- Exit the program when needed.
+* Create a Person.
+* Create an Employee.
+* Create a Manager.
+* Create a Developer.
+* Display details of created objects.
+* Check inheritance relationships.
+* Use encapsulation through private attributes.
+* Validate employee ID and salary through setter methods.
+* Demonstrate method overriding and `super()`.
+* Demonstrate an alternative constructor using `@classmethod`.
+* Demonstrate `issubclass()` and `isinstance()`.
+* Exit the program when needed.
 
 ---
 
 ## 🛠️ Technologies Used
 
-- **Python 3.14.6** — Programming language used to develop the Employee Management System.
-- **Visual Studio Code (VS Code)** — Development environment used to write and run the project.
-- **Python Standard Library** — Built-in Python features used for console input/output, classes, objects, inheritance, validation, and object cleanup.
+* **Python 3.14.6** — Programming language used to develop the Employee Management System.
+* **Visual Studio Code (VS Code)** — Development environment used to write and run the project.
+* **Python Standard Library** — Built-in Python features used for console input/output, classes, objects, inheritance, validation, and object cleanup.
 
 ---
 
@@ -37,16 +39,17 @@ The project is organized as follows:
 
 ```text
 Project-5/
+
 ├── employee_management_system.py
 └── README.md
 ```
 
 ### File Description
 
-| File | Purpose |
-|---|---|
+| File                            | Purpose                                                                                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `employee_management_system.py` | Main Python program containing the Person, Employee, Manager, and Developer classes, menu system, validation, OOP demonstrations, and program execution. |
-| `README.md` | Project documentation containing the description, technologies, project structure, OOP concepts, run instructions, assumptions, and sample output. |
+| `README.md`                     | Project documentation containing the description, technologies, project structure, OOP concepts, run instructions, assumptions, and sample output.       |
 
 ---
 
@@ -54,26 +57,47 @@ Project-5/
 
 The main objective of this project is to build an Employee Management System using Python and demonstrate various Object-Oriented Programming concepts.
 
-The project demonstrates classes, objects, constructors, destructors, encapsulation, inheritance, method overriding, alternative constructors, `super()`, `issubclass()`, `isinstance()`, validation, and an interactive menu-driven user interface.
+The project demonstrates:
+
+* Classes and objects
+* Constructors
+* Destructors
+* Encapsulation
+* Getters and setters
+* Validation
+* Inheritance
+* Method overriding
+* Alternative constructors
+* `super()`
+* `issubclass()`
+* `isinstance()`
+* `self`
+* Interactive menu-driven programming
 
 ---
 
 ## 📂 Project Classes
+
+The project contains four main classes:
 
 1. `Person`
 2. `Employee`
 3. `Manager`
 4. `Developer`
 
+The inheritance structure is:
+
 ```text
 Person
+
+Employee
    |
-   +---- Employee
-             |
-             +---- Manager
-             |
-             +---- Developer
+   +---- Manager
+   |
+   +---- Developer
 ```
+
+`Manager` and `Developer` inherit from `Employee`.
 
 ---
 
@@ -83,76 +107,94 @@ The `Person` class represents a basic person.
 
 ### Attributes
 
-- `name`
-- `age`
+* `name`
+* `age`
 
 ### Constructor
 
 ```python
-def __init__(self, name="", age=0):
+def __init__(self, name, age):
     self.name = name
     self.age = age
 ```
 
-The `self` keyword refers to the current object's instance attributes. The class also contains a `display()` method to show person details.
+The `self` keyword refers to the current object and is used to store instance attributes.
+
+### Display Method
+
+The `display()` method displays the person's name and age.
 
 ---
 
 ## 👨‍💼 Employee Class
 
-The `Employee` class is the base class for employee-related classes.
+The `Employee` class represents a basic employee and acts as the parent class for `Manager` and `Developer`.
 
 ### Attributes
 
-- `name`
-- `age`
-- `employee_id`
-- `salary`
+* `name`
+* `age`
+* `employee_id`
+* `salary`
 
 ### Constructor
 
 ```python
-def __init__(self, name="", age=0, employee_id="", salary=0.0):
+def __init__(self, name, age, employee_id="", salary=0):
 ```
+
+The constructor initializes the employee information.
+
+The employee ID and salary are stored using private attributes.
 
 ---
 
 ## 🔐 Encapsulation
 
-Sensitive employee information is protected using private attributes:
+Encapsulation is demonstrated using private attributes:
 
 ```python
 self.__employee_id
 self.__salary
 ```
 
-They are accessed through getter and setter methods.
+These attributes are accessed through getter and setter methods.
+
+### Employee ID Getter
 
 ```python
 def get_employee_id(self):
     return self.__employee_id
 ```
 
+### Employee ID Setter
+
 ```python
 def set_employee_id(self, employee_id):
 ```
+
+The setter prevents an empty employee ID from replacing the existing value.
+
+### Salary Getter
 
 ```python
 def get_salary(self):
     return self.__salary
 ```
 
+### Salary Setter
+
 ```python
 def set_salary(self, salary):
 ```
 
-The setters validate the values. Employee ID cannot be empty and salary must be numeric and non-negative.
+The salary setter checks whether the salary is negative. If the salary is valid, it is stored as a floating-point value.
 
 ---
 
 ## 🏗️ Constructors
 
-Constructors are implemented using `__init__()` and initialize object attributes.
+Constructors are implemented using `__init__()`.
 
 Example:
 
@@ -165,23 +207,34 @@ employee = Employee(
 )
 ```
 
+The constructor initializes the employee's name, age, employee ID, and salary.
+
 ---
 
 ## 🧹 Destructor
 
-The `Employee` class contains:
+The `Employee` class contains a destructor:
 
 ```python
 def __del__(self):
+    print(
+        f"Resource cleanup completed for {self.name}."
+    )
 ```
 
-The destructor demonstrates resource cleanup when objects are destroyed.
+The destructor demonstrates object cleanup when an Employee object is destroyed.
+
+Since `Manager` and `Developer` inherit from `Employee`, they also use the Employee destructor.
+
+The exact timing and order of destructor execution can depend on Python's object lifecycle.
 
 ---
 
 ## 🧬 Inheritance
 
-Manager and Developer inherit from Employee:
+Inheritance allows a child class to reuse the functionality of a parent class.
+
+The `Manager` and `Developer` classes inherit from `Employee`:
 
 ```python
 class Manager(Employee):
@@ -191,7 +244,7 @@ class Manager(Employee):
 class Developer(Employee):
 ```
 
-Both classes reuse Employee attributes and methods.
+Both classes reuse Employee attributes, methods, getters, setters, and the destructor.
 
 ---
 
@@ -199,13 +252,21 @@ Both classes reuse Employee attributes and methods.
 
 The `Manager` class is derived from `Employee`.
 
-Additional attribute:
+### Additional Attribute
 
 ```text
 department
 ```
 
-The `display()` method is overridden to include department information.
+The Manager constructor first calls the Employee constructor using `super()` and then stores the department.
+
+Example:
+
+```python
+class Manager(Employee):
+```
+
+The `display()` method is overridden to display the department along with the employee details.
 
 ---
 
@@ -213,24 +274,35 @@ The `display()` method is overridden to include department information.
 
 The `Developer` class is derived from `Employee`.
 
-Additional attribute:
+### Additional Attribute
 
 ```text
 programming_language
 ```
 
-The `display()` method is overridden to include programming language information.
+The Developer constructor first calls the Employee constructor using `super()` and then stores the programming language.
+
+Example:
+
+```python
+class Developer(Employee):
+```
+
+The `display()` method is overridden to display the programming language along with the employee details.
 
 ---
 
 ## 🔄 Method Overriding
 
-The Employee class defines `display()`. Manager and Developer override it.
+The `Employee` class defines a `display()` method.
+
+The `Manager` and `Developer` classes override this method to add their own specific information.
 
 ### Manager
 
 ```python
 def display(self):
+
     super().display()
     print(f"Department: {self.department}")
 ```
@@ -239,20 +311,24 @@ def display(self):
 
 ```python
 def display(self):
+
     super().display()
+
     print(
         f"Programming Language: "
         f"{self.programming_language}"
     )
 ```
 
-This extends the parent functionality with child-specific information.
+This demonstrates method overriding because the child classes provide their own implementation of the inherited `display()` method.
 
 ---
 
 ## ⬆️ Use of `super()`
 
-`super()` calls parent-class constructors and methods.
+The `super()` function is used to access methods of the parent class.
+
+### Parent Constructor
 
 Manager and Developer constructors call:
 
@@ -265,24 +341,39 @@ super().__init__(
 )
 ```
 
-Their overridden `display()` methods call:
+This allows the parent `Employee` constructor to initialize common employee information.
+
+### Parent Display Method
+
+The overridden `display()` methods also call:
 
 ```python
 super().display()
 ```
 
+This reuses the Employee display functionality before displaying child-specific information.
+
 ---
 
-## 🔀 Method Overloading / Alternative Constructor
+## 🔀 Alternative Constructor
 
-Python does not provide traditional method overloading in the same way as some languages, so an alternative constructor is used.
+Python does not provide traditional method overloading in the same way as some other programming languages.
+
+This project demonstrates an alternative constructor using `@classmethod`:
 
 ```python
 @classmethod
 def from_dict(cls, data):
+
+    return cls(
+        data.get("name", ""),
+        data.get("age", 0),
+        data.get("employee_id", ""),
+        data.get("salary", 0)
+    )
 ```
 
-This provides another way to create an Employee object from a dictionary.
+It allows an Employee object to be created from a dictionary.
 
 Example:
 
@@ -295,49 +386,58 @@ employee_data = {
 }
 ```
 
-It can be created using:
+The object can be created using:
 
 ```python
 Employee.from_dict(employee_data)
 ```
 
-The normal constructor can also be used.
+The normal constructor can also be used to create an Employee object.
 
 ---
 
 ## 🔍 Getters and Setters
 
-The project uses:
+The project uses getter and setter methods for controlled access to private attributes.
 
-```text
-get_employee_id()
-set_employee_id()
-get_salary()
-set_salary()
-```
-
-The setters provide controlled access and validation for private attributes.
+| Method              | Purpose                                                     |
+| ------------------- | ----------------------------------------------------------- |
+| `get_employee_id()` | Returns the employee ID                                     |
+| `set_employee_id()` | Updates the employee ID after checking that it is not empty |
+| `get_salary()`      | Returns the salary                                          |
+| `set_salary()`      | Updates the salary after checking that it is not negative   |
 
 ---
 
 ## ✅ Validation
 
-The program validates:
+The current program performs the following validation:
 
-- Name is not empty.
-- Age is not negative.
-- Employee ID is not empty.
-- Salary is numeric.
-- Salary is not negative.
-- Department is not empty.
-- Programming language is not empty.
-- Menu choices are valid.
+* Employee ID cannot be empty when using `set_employee_id()`.
+* Salary cannot be negative when using `set_salary()`.
+* Salary is converted to `float` before being stored.
+* Menu choices are checked against the available options.
+* The `create_*()` functions convert age to `int` and salary to `float`.
+
+### Input Handling
+
+The following inputs are converted using Python's built-in conversion functions:
+
+```python
+age = int(input("Enter Age: "))
+```
+
+```python
+salary = float(input("Enter Salary: "))
+```
+
+Therefore, the user is expected to enter valid numeric values for age and salary.
 
 ---
 
 ## 🧪 `issubclass()`
 
-The program demonstrates:
+The program demonstrates class inheritance using:
 
 ```python
 issubclass(Manager, Employee)
@@ -349,13 +449,19 @@ and:
 issubclass(Developer, Employee)
 ```
 
-Both return `True` because they inherit from Employee.
+Both return:
+
+```text
+True
+```
+
+because `Manager` and `Developer` inherit from `Employee`.
 
 ---
 
 ## 🔎 `isinstance()`
 
-The program uses `isinstance()` to check object types.
+The program uses `isinstance()` to identify object types.
 
 Examples:
 
@@ -367,13 +473,17 @@ isinstance(manager, Manager)
 isinstance(developer, Employee)
 ```
 
-A Developer is also an Employee because Developer inherits from Employee.
+A `Developer` object is also an `Employee` because `Developer` inherits from `Employee`.
+
+The program also uses `isinstance()` inside `show_details()` to determine whether an object is a Manager, Developer, or regular Employee.
 
 ---
 
 ## 🧍 Use of `self`
 
-The `self` keyword refers to the current object and is used for instance attributes such as:
+The `self` keyword refers to the current object.
+
+It is used for instance attributes such as:
 
 ```python
 self.name
@@ -381,6 +491,8 @@ self.age
 self.department
 self.programming_language
 ```
+
+It is also used when accessing private attributes and methods inside the classes.
 
 ---
 
@@ -397,13 +509,13 @@ The main menu is:
 6. Exit
 ```
 
-The program continues until option `6` is selected.
+The program continues running until the user selects option `6`.
 
 ---
 
 ## 📋 Show Details
 
-Option `5` displays:
+Option `5` opens the details menu:
 
 ```text
 1. Person
@@ -413,36 +525,44 @@ Option `5` displays:
 5. All
 ```
 
-The selected object's appropriate `display()` method is called.
+The program displays the selected records using the appropriate `display()` method.
+
+For Employee records, the program uses `isinstance()` to distinguish between:
+
+* Regular Employee
+* Manager
+* Developer
 
 ---
 
 ## 📊 OOP Concepts Demonstrated
 
-| OOP Concept | Implementation |
-|---|---|
-| Class | Person, Employee, Manager, Developer |
-| Object | Objects created from the classes |
-| Constructor | `__init__()` |
-| Destructor | `__del__()` |
-| Encapsulation | Private Employee ID and Salary |
-| Getter | `get_employee_id()`, `get_salary()` |
-| Setter | `set_employee_id()`, `set_salary()` |
-| Validation | Input and setter validation |
-| Inheritance | Manager and Developer inherit Employee |
-| Method Overriding | Manager and Developer override `display()` |
-| `super()` | Parent constructor and display method |
-| Alternative Constructor | `Employee.from_dict()` |
-| `issubclass()` | Checks class inheritance |
-| `isinstance()` | Checks object type |
-| `self` | Used for instance attributes |
-| Interactive UI | Menu-driven console interface |
+| OOP Concept             | Implementation                               |
+| ----------------------- | -------------------------------------------- |
+| Class                   | `Person`, `Employee`, `Manager`, `Developer` |
+| Object                  | Objects created from the classes             |
+| Constructor             | `__init__()`                                 |
+| Destructor              | `__del__()`                                  |
+| Encapsulation           | Private Employee ID and Salary               |
+| Getter                  | `get_employee_id()`, `get_salary()`          |
+| Setter                  | `set_employee_id()`, `set_salary()`          |
+| Validation              | Employee ID and salary validation            |
+| Inheritance             | Manager and Developer inherit Employee       |
+| Method Overriding       | Manager and Developer override `display()`   |
+| `super()`               | Parent constructor and display method        |
+| Alternative Constructor | `Employee.from_dict()`                       |
+| `issubclass()`          | Checks class inheritance                     |
+| `isinstance()`          | Checks object type                           |
+| `self`                  | Used for instance attributes                 |
+| Interactive UI          | Menu-driven console interface                |
 
 ---
 
 ## ▶️ How to Run
 
-Make sure Python is installed.
+Make sure Python is installed on the system.
+
+Open the project folder in a terminal and run:
 
 ```bash
 python employee_management_system.py
@@ -454,14 +574,16 @@ Follow the menu options and enter the required information.
 
 ## 📝 Assumptions
 
-- Employee ID must not be empty.
-- Salary must be numeric.
-- Salary cannot be negative.
-- Age cannot be negative.
-- Department must be provided for a Manager.
-- Programming language must be provided for a Developer.
-- Created objects are stored only during the current execution.
-- No database or external permanent storage is used.
+* Employee ID should not be empty.
+* Salary should be entered as a numeric value.
+* Salary cannot be negative.
+* Age should be entered as a numeric value.
+* The program expects valid numeric input for age and salary.
+* Manager department and Developer programming language are accepted as user input.
+* Created objects are stored only during the current program execution.
+* No database or external permanent storage is used.
+* `Employee.from_dict()` is available as an alternative way to create an Employee object but is not directly used through the main menu.
+* Destructor execution timing and order are controlled by Python's object lifecycle.
 
 ---
 
@@ -469,15 +591,42 @@ Follow the menu options and enter the required information.
 
 This project demonstrates how Python Object-Oriented Programming concepts can be used to build an Employee Management System.
 
-The project combines classes, objects, constructors, destructors, encapsulation, getters and setters, validation, inheritance, method overriding, alternative constructors, `super()`, `issubclass()`, `isinstance()`, and an interactive menu.
+The project combines:
+
+* Classes and objects
+* Constructors and destructors
+* Encapsulation
+* Getters and setters
+* Validation
+* Inheritance
+* Method overriding
+* Alternative constructors
+* `super()`
+* `issubclass()`
+* `isinstance()`
+* `self`
+* Interactive menu-driven programming
+
+The project provides a practical example of applying OOP concepts in a console-based Python application.
 
 ---
 
 ## 🖥️ Output Presentation
 
-The output below represents the complete program execution. It includes the menu flow for creating a Person, Employee, Manager, and Developer, displaying details, performing inheritance checks, and executing **option 6 (Exit)**.
+The output below represents a sample program execution.
 
-The sample output is kept at the end of this README so the complete execution result is easy to verify.
+It includes:
+
+* Creating a Person
+* Creating an Employee
+* Creating a Manager
+* Creating a Developer
+* Displaying Developer details
+* Performing inheritance checks
+* Selecting option `6` to exit the program
+* Object cleanup messages
+
+The sample output is kept at the end of this README so that the complete execution result is easy to verify.
 
 ---
 
@@ -583,6 +732,7 @@ Choose details to show:
 3. Manager
 4. Developer
 5. All
+
 Enter your choice: 4
 
 Employee Details:
@@ -598,7 +748,7 @@ issubclass(Developer, Employee): True
 isinstance(vrunda sharma, Manager): True
 isinstance(shree patel, Employee): True
 
---- Choose an operation ---
+--- Choose another operation ---
 
 Choose an operation:
 1. Create a Person
@@ -612,6 +762,7 @@ Enter your choice: 6
 
 Exiting the system. All resources have been freed.
 Goodbye!
+
 Resource cleanup completed for shree patel.
 Resource cleanup completed for vrunda sharma.
 Resource cleanup completed for madhav birla.
